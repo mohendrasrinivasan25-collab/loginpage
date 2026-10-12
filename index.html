@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            display: grid;
+            align-items: center;
+            justify-content: center;
+        }
+        .container{
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 30px;
+            margin-top: 100px;
+            border-radius: 20px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h2>Registration Form</h2>
+        <table>
+            <form id="registrationForm">
+
+                <label>Name:</label>
+                <input type="text" id="name">
+                <p id="nameError" style="color: red;"></p>
+
+                <label>Email:</label>
+                <input type="text" id="email">
+                <p id="emailError" style="color: red;"></p>
+
+                <label>Password:</label>
+                <input type="password" id="password">
+                <p id="passwordError" style="color: red;"></p>
+
+                <button type="submit" id="btn" disabled>Register</button>
+            </form>
+
+        </table>
+
+
+    </div>
+
+    <script>
+        var nameInput = document.getElementById("name");
+        var emailInput = document.getElementById("email");
+        var password = document.getElementById("password");
+        var btn = document.getElementById("btn");
+        var form = document.getElementById("registrationForm");
+
+        function checkForm() {
+            var isNameValid = nameInput.value.trim() !== "";
+            var isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+            var isPasswordValid = password.value.length >= 6;
+
+            // Name validation
+            if (!isNameValid) {
+                document.getElementById("nameError").innerHTML =
+                    "Name is required";
+            } else {
+                document.getElementById("nameError").innerHTML = "";
+            }
+
+            // Email validation
+            if (!isEmailValid) {
+                document.getElementById("emailError").innerHTML =
+                    "Enter a valid email";
+            } else {
+                document.getElementById("emailError").innerHTML = "";
+            }
+
+            // Password validation
+            if (!isPasswordValid) {
+                document.getElementById("passwordError").innerHTML =
+                    "Password must have 6 characters";
+            } else {
+                document.getElementById("passwordError").innerHTML = "";
+            }
+
+            // Button validation
+            var isFormValid = isNameValid && isEmailValid && isPasswordValid;
+            btn.disabled = !isFormValid;
+            return isFormValid;
+        }
+
+        nameInput.addEventListener("input", checkForm);
+        emailInput.addEventListener("input", checkForm);
+        password.addEventListener("input", checkForm);
+        checkForm();
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            if (checkForm()) {
+                alert("Registration Successful!");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
